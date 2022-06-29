@@ -259,7 +259,7 @@ protected:
     // extensions_ and gpu_arch_ describe effective extensions and GPU architecture.
     uint64_t extensions_ = 0;
 
-private:
+protected:
     status_t init_attributes_common(engine_t *engine);
 
     bool mayiuse_ngen_kernels_ = false;

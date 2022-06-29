@@ -46,7 +46,7 @@ const int LOG_PERF = 170;
 const int LOG_TRACE = 200;
 
 #ifdef GEN_CONV_DEBUG
-const int LOG_LEVEL = LOG_WARNING;
+const int LOG_LEVEL = LOG_TRACE;
 #else
 const int LOG_LEVEL = LOG_OFF;
 #endif

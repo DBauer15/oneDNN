@@ -30,7 +30,7 @@
 #include "gpu/jit/conv/utils.hpp"
 
 #ifndef NDEBUG
-#define SANITY_CHECK 1
+//#define SANITY_CHECK 0
 #endif
 
 // All IR expression objects.
