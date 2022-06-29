@@ -16,8 +16,13 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
+# Set Intel DPC++ compiler as default
+# options.cmake sets default runtimes to DPCPP for both CPU and GPU
 set(CMAKE_C_COMPILER icx)
 set(CMAKE_CXX_COMPILER icpx)
+
+# Force debug output
+add_definitions(-DGEN_CONV_DEBUG)
 
 if(POLICY CMP0022)
     cmake_policy(SET CMP0022 NEW)

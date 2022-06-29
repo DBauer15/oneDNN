@@ -21,7 +21,7 @@ append(CMAKE_CXX_FLAGS "-fno-operator-names")
 
 include_directories_with_host_compiler(${PROJECT_SOURCE_DIR}/src)
 include_directories_with_host_compiler(${PROJECT_SOURCE_DIR}/include)
-include_directories_with_host_compiler(${PROJECT_SOURCE_DIR}/apps)
+include_directories_with_host_compiler(${PROJECT_SOURCE_DIR}/apps/extern)
 
 file(GLOB_RECURSE sources *.cpp *.c)
 file(GLOB_RECURSE headers *.hpp *.h)
@@ -33,3 +33,12 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 add_executable(ir_dump ${sources})
 target_link_libraries(ir_dump ${DNNL_LIBRARY_NAME})
+
+# Copy the config file
+# TODO: Not working yet - fix eventually
+# file(GLOB CONFIG_FILES "${CMAKE_SOURCE_DIR}/apps/config/*.json")
+# add_custom_command(TARGET ir_dump
+#                 POST_BUILD
+#                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#                 ${CONFIG_FILES}
+#                 $<TARGET_FILE_DIR:ir_dump>)

@@ -55,10 +55,10 @@ option(DNNL_ENABLE_CPU_ISA_HINTS
 # Building properties and scope
 # =============================
 
-set(DNNL_LIBRARY_TYPE "SHARED" CACHE STRING
+set(DNNL_LIBRARY_TYPE "STATIC" CACHE STRING
     "specifies whether oneDNN library should be SHARED or STATIC")
-option(DNNL_BUILD_EXAMPLES "builds examples"  ON)
-option(DNNL_BUILD_TESTS "builds tests" ON)
+option(DNNL_BUILD_EXAMPLES "builds examples"  OFF)
+option(DNNL_BUILD_TESTS "builds tests" OFF)
 option(DNNL_BUILD_FOR_CI
     "specifies whether oneDNN library will use special testing environment for
     internal testing processes"
@@ -191,7 +191,7 @@ option(DNNL_ENABLE_ITT_TASKS
 # Engine capabilities
 # ===================
 
-set(DNNL_CPU_RUNTIME "OMP" CACHE STRING
+set(DNNL_CPU_RUNTIME "DPCPP" CACHE STRING
     "specifies the threading runtime for CPU engines;
     supports OMP (default), TBB or DPCPP (DPC++ CPU engines).
 
@@ -215,7 +215,7 @@ set(TBBROOT "" CACHE STRING
     "path to Thread Building Blocks (TBB).
     Use this option to specify TBB installation locaton.")
 
-set(DNNL_GPU_RUNTIME "NONE" CACHE STRING
+set(DNNL_GPU_RUNTIME "DPCPP" CACHE STRING
     "specifies the runtime to use for GPU engines.
     Can be NONE (default; no GPU engines), OCL (OpenCL GPU engines)
     or DPCPP (DPC++ GPU engines).
