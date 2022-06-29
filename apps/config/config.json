@@ -1,0 +1,32 @@
+{
+    "hardware": {
+        "name": "Mock Compute Device",
+        "gpu_arch": "xe_hpg",
+        "runtime_version": "1.0.0",
+        "extensions": 0,
+        "hw_threads": {
+            "normal_grf": 128,
+            "large_grf": 64
+        },
+        "eu_count": 128,
+        "max_eus_per_wg": 8,
+        "max_subgroup_size": 256,
+        "max_wg_size": 256,
+        "llc_cache_size": 64
+    },
+    "convolution": {
+        "N": 15,
+        "IC": 32,
+        "IH": 13,
+        "IW": 13,
+        "OC": 64,
+        "KH": 3,
+        "KW": 3,
+        "PH_L": 1,
+        "PH_R": 1,
+        "PW_L": 1,
+        "PW_R": 1,
+        "SH": 4,
+        "SW": 4
+    }
+}

@@ -3,6 +3,7 @@
 #include <tuple>
 #include <vector>
 #include <memory>
+#include <json/json.hpp>
 #include "oneapi/dnnl/dnnl.hpp"
 #include "common/c_types_map.hpp"
 #include "common/engine.hpp"
@@ -12,18 +13,19 @@
 
 #include "mock_device_info_t.hpp"
 
-
+using namespace nlohmann;
 using namespace dnnl::impl;
 
 struct mock_engine : public gpu::compute::compute_engine_t {
 
+    json config;
 
-    mock_engine() : gpu::compute::compute_engine_t(engine_kind::gpu, runtime_kind::ocl, 0) { 
+    mock_engine(json config) : gpu::compute::compute_engine_t(engine_kind::gpu, runtime_kind::ocl, 0), config(config) { 
         init();
     };
 
     virtual device_id_t device_id() const override {
-        return std::tuple(0,0,0);
+        return std::tuple<int, uint64_t, uint64_t>(0,0,0);
     };
 
     virtual engine_id_t engine_id() const override {
@@ -36,11 +38,11 @@ struct mock_engine : public gpu::compute::compute_engine_t {
         size_t size,
         void *handle) override {
         
-        return status::success;
+        return status_t::dnnl_success;
     };
 
     virtual status_t create_stream(stream_t **stream, unsigned flags) override {
-        return status::success;
+        return status_t::dnnl_success;
     ;}
 
     virtual const impl_list_item_t *get_reorder_implementation_list(
@@ -90,7 +92,7 @@ struct mock_engine : public gpu::compute::compute_engine_t {
 
     /* Compute Engine Function */
     virtual status_t create_kernel(gpu::compute::kernel_t *kernel, gpu::jit::jit_generator_base *jitter, cache_blob_t cache_blob) const override {
-        return status::unimplemented;
+        return status_t::dnnl_success;
     };
 
     virtual status_t create_kernels(std::vector<gpu::compute::kernel_t> *kernels,
@@ -98,7 +100,7 @@ struct mock_engine : public gpu::compute::compute_engine_t {
             const gpu::compute::kernel_ctx_t &kernel_ctx,
             cache_blob_t cache_blob) const override {
         
-        return status::unimplemented;
+        return status_t::dnnl_success;
     };
 
     virtual std::function<void(void *)> get_program_list_deleter() const override {
@@ -107,9 +109,9 @@ struct mock_engine : public gpu::compute::compute_engine_t {
 
     protected:
     virtual status_t init_device_info() override {
-        device_info_ = std::make_shared<mock_device_info_t>();
+        device_info_ = std::make_shared<mock_device_info_t>(config);
         device_info_->init(this);
-        return status::success;
+        return status_t::dnnl_success;
     };
     
 };

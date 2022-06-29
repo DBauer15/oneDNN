@@ -1,9 +1,10 @@
 #pragma once
 
 #include <string>
+#include <json/json.hpp>
 #include "gpu/compute/device_info.hpp"
 
-
+using namespace nlohmann;
 using namespace dnnl::impl;
 
 struct mock_device_info_t : gpu::compute::device_info_t {
@@ -34,26 +35,45 @@ struct mock_device_info_t : gpu::compute::device_info_t {
         max_subgroup_size_ = max_subgroup_size;
         max_wg_size_ = max_wg_size;
         llc_cache_size_ = llc_cache_size;
+
+        // Force ngen compatibility
+        mayiuse_ngen_kernels_ = true;
+        checked_ngen_kernels_ = true;
     };
+
+    mock_device_info_t(json config) :
+    mock_device_info_t(
+        config["name"],
+        gpu::compute::str2gpu_arch(std::string(config["gpu_arch"]).c_str()),
+        config["runtime_version"],
+        (uint64_t)config["extensions"],
+        (int32_t)config["hw_threads"]["normal_grf"],
+        (int32_t)config["hw_threads"]["large_grf"],
+        (int32_t)config["eu_count"],
+        (int32_t)config["max_eus_per_wg"],
+        (int32_t)config["max_subgroup_size"],
+        (size_t)config["max_wg_size"],
+        (size_t)config["llc_cache_size"]
+    ) {};
 
     protected:
     std::string runtime_version_string;
 
     virtual status_t init_device_name(engine_t *engine) override {
-        return status::success;
+        return status_t::dnnl_success;
     };
     virtual status_t init_arch(engine_t *engine) override {
-        return status::success;
+        return status_t::dnnl_success;
     };
     virtual status_t init_runtime_version(engine_t *engine) override {
         runtime_version_.set_from_string(runtime_version_string.c_str());
-        return status::success;
+        return status_t::dnnl_success;
     };
     virtual status_t init_extensions(engine_t *engine) override {
         // TODO: - Do we need those?
-        return status::success;
+        return status_t::dnnl_success;
     };
     virtual status_t init_attributes(engine_t *engine) override {
-        return status::success;
+        return status_t::dnnl_success;
     };
 };
