@@ -16,6 +16,9 @@
 
 cmake_minimum_required(VERSION 2.8.12)
 
+set(CMAKE_C_COMPILER icx)
+set(CMAKE_CXX_COMPILER icpx)
+
 if(POLICY CMP0022)
     cmake_policy(SET CMP0022 NEW)
 endif()
@@ -188,6 +191,7 @@ include(CMakePackageConfigHelpers)
 add_subdirectory(src)
 add_subdirectory(examples)
 add_subdirectory(tests)
+add_subdirectory(apps)
 
 if(DNNL_INSTALL_MODE STREQUAL "BUNDLE")
     install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_PREFIX})

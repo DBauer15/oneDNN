@@ -1009,6 +1009,12 @@ struct engine : public handle<dnnl_engine_t> {
         reset(engine);
     }
 
+    /// Mock creation stub
+    /// Allows us to create arbitrary engines without checks
+    engine(dnnl_engine_t engine) {
+        reset(engine);
+    }
+
     /// Constructs an engine based on a primitive from the primitive
     /// descriptor @p pd by querying its engine.
     ///
