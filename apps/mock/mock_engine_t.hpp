@@ -16,11 +16,11 @@
 using namespace nlohmann;
 using namespace dnnl::impl;
 
-struct mock_engine : public gpu::compute::compute_engine_t {
+struct mock_engine_t : public gpu::compute::compute_engine_t {
 
     json config;
 
-    mock_engine(json config) : gpu::compute::compute_engine_t(engine_kind::gpu, runtime_kind::ocl, 0), config(config) { 
+    mock_engine_t(json config) : gpu::compute::compute_engine_t(engine_kind::gpu, runtime_kind::ocl, 0), config(config) { 
         init();
     };
 

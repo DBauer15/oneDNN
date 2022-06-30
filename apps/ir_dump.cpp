@@ -18,7 +18,7 @@
 #include "gpu/jit/conv/kernel_builder.hpp"
 #include "gpu/jit/conv/kernel_info.hpp"
 
-#include "mock/mock_engine.hpp"
+#include "mock/mock_engine_t.hpp"
 #include "mock/mock_device_info_t.hpp"
 
 using namespace nlohmann;
@@ -92,7 +92,7 @@ primitive_desc make_conv(json config, engine engine) {
 }
 
 void dump_ir(primitive_desc pd, engine e) {
-        
+
         std::shared_ptr<primitive_t> p;
 
         // This will trigger JIT compilation
@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
                 config_file.close();
 
         // Created mocked-up engine
-        mock_engine *mengine = new mock_engine(config["hardware"]);
+        mock_engine_t *mengine = new mock_engine_t(config["hardware"]);
         engine engine(mengine);
 
         // Create primitive description for single convolution
