@@ -63,12 +63,12 @@ primitive_desc make_conv(json config, engine engine) {
         // enables the convolution primitive to choose memory layouts for an
         // optimized primitive implementation, and these layouts may differ from the
         // ones provided by the user.
-        auto conv_src_md = memory::desc(src_dims, dt::f32, tag::any);
-        auto conv_weights_md = memory::desc(weights_dims, dt::f32, tag::any);
-        auto conv_dst_md = memory::desc(dst_dims, dt::f32, tag::any);
+        auto conv_src_md = memory::desc(src_dims, dt::f16, tag::any);
+        auto conv_weights_md = memory::desc(weights_dims, dt::f16, tag::any);
+        auto conv_dst_md = memory::desc(dst_dims, dt::f16, tag::any);
 
         // Create memory descriptor and memory object for input bias.
-        auto user_bias_md = memory::desc(bias_dims, dt::f32, tag::a);
+        auto user_bias_md = memory::desc(bias_dims, dt::f16, tag::a);
 
 
         // Create operation descriptor.
