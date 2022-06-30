@@ -99,13 +99,9 @@ void dump_ir(primitive_desc pd, engine e) {
         pd.get()->impl()->create_primitive(p, e.get());
 }
 
-
-int main(int argc, char **argv) {
-        // Read config
-        if (argc < 2) throw std::runtime_error("no config file provided");
-        
+json load_config(std::string filename) {
         json config;
-        std::ifstream config_file(argv[1]);
+        std::ifstream config_file(filename);
         if (!config_file.is_open() || !config_file.good())
                 throw std::runtime_error("could not open config file");
 
@@ -113,12 +109,31 @@ int main(int argc, char **argv) {
         if (config_file.is_open())
                 config_file.close();
 
+        return config;
+}
+
+void print_usage() {
+        std::cout << "---------------------------" << std::endl;
+        std::cout << "oneDNN -- IR DUMP" << std::endl;
+        std::cout << "---------------------------\n" << std::endl;
+        std::cout << "Usage:" << std::endl;
+        std::cout << "./ir_dump [convolution-config] [hardware-config]" << std::endl;
+}
+
+
+int main(int argc, char **argv) {
+        // Read config
+        if (argc < 3) { print_usage(); throw std::runtime_error("no config files provided"); }
+        
+        json config_conv = load_config(argv[1]);
+        json config_hardware = load_config(argv[2]);
+
         // Created mocked-up engine
-        mock_engine_t *mengine = new mock_engine_t(config["hardware"]);
+        mock_engine_t *mengine = new mock_engine_t(config_hardware["hardware"]);
         engine engine(mengine);
 
         // Create primitive description for single convolution
-        primitive_desc pd = make_conv(config["convolution"], engine);
+        primitive_desc pd = make_conv(config_conv["convolution"], engine);
 
         // Dump the IR code
         dump_ir(pd, engine);

@@ -13,20 +13,5 @@
         "max_subgroup_size": 256,
         "max_wg_size": 256,
         "llc_cache_size": 64
-    },
-    "convolution": {
-        "N": 15,
-        "IC": 32,
-        "IH": 13,
-        "IW": 13,
-        "OC": 64,
-        "KH": 3,
-        "KW": 3,
-        "PH_L": 1,
-        "PH_R": 1,
-        "PW_L": 1,
-        "PW_R": 1,
-        "SH": 4,
-        "SW": 4
     }
 }
