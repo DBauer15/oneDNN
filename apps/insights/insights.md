@@ -53,7 +53,13 @@ This command is invariably the same for most image sizes but indices for `A` mig
 
 ## Optimized Algorithm
 
+The JIT compiler performs multiple code optimizations. Some of them are very granular and hard to read while others are quite simple and easy to implement. Here some notable examples:
 
+* Merge the two SLM buffers for `A` and `B` into a single one and use adequate offsets
+* Remove unused statements like `kd` loop or `mb_inner_outer` or set them to zero
+* Unroll loops in such a way that GRF->SLM loads are reduced
+
+    The bulk of data transfers happens once in the beginning and only small amounts of data are loaded between each set of `dpas(w)` calls which optimizes the SLM utilization
 
 
 ## Changing the problem size
