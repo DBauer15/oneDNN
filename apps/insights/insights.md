@@ -7,6 +7,16 @@ Inside of the kernel the convolution is performed in the GEMM-like form as descr
 ## Algorithm Description
 Overall the unoptimized IR produced by the generator follows this sequence of steps:
 
+0. Determine dispatch sizes
+```
+Dimension ow:               (grid:    4) x (tg:   16) x (thr:    1) x (iter:   16)
+Dimension kh:               (grid:    1) x (tg:    1) x (thr:    3) x (iter:    1)
+Dimension ic:               (grid:    1) x (tg:    1) x (thr:    2) x (iter:   16)
+Dimension oc:               (grid:    1) x (tg:    2) x (thr:    1) x (iter:   32)
+Dimension kw:               (grid:    1) x (tg:    1) x (thr:    3) x (iter:    1)
+Kernel grid:                1 x 4096 x 1
+Thread group:               2 x 16 x 1
+```
 1. Allocate `A`,`B`, `C` buffers and fill `C` with zeros
 2. Initiate compute loop, which is defined as
 ```python
